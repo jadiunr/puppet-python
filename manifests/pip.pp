@@ -178,10 +178,10 @@ define python::pip (
   # Explicit version out of VCS when PIP supported URL is provided
   if $source =~ /^'(git\+|hg\+|bzr\+|svn\+)(http|https|ssh|svn|sftp|ftp|lp|git)(:\/\/).+'$/ {
     if $_ensure != present and $_ensure != latest {
-      $command        = "${pip_install} ${install_args} ${pip_common_args}@${_ensure}#egg=${egg_name}"
+      $command        = "${pip_install} ${pip_common_args}@${_ensure}#egg=${egg_name}"
       $unless_command = "${pip_env} list | grep -i -e '${grep_regex}'"
     } else {
-      $command        = "${pip_install} ${install_args} ${pip_common_args}"
+      $command        = "${pip_install} ${pip_common_args}"
       $unless_command = "${pip_env} list | grep -i -e '${grep_regex}'"
     }
   } else {
@@ -189,7 +189,7 @@ define python::pip (
       /^((19|20)[0-9][0-9]-(0[1-9]|1[1-2])-([0-2][1-9]|3[0-1])|[0-9]+\.\w+\+?\w*(\.\w+)*)$/: {
         # Version formats as per http://guide.python-distribute.org/specification.html#standard-versioning-schemes
         # Explicit version.
-        $command        = "${pip_install} ${install_args} ${pip_common_args}==${_ensure}"
+        $command        = "${pip_install} ${pip_common_args}==${_ensure}"
         $unless_command = "${pip_env} list | grep -i -e '${grep_regex}'"
       }
 
